@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Fragment } from 'react';
+import 'primeicons/primeicons.css';
 
 import { publicRoutes } from '@/routes';
 import DefaultLayout from '@/layout/DefaultLayout';

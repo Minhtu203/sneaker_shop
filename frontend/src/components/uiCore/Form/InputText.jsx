@@ -1,12 +1,12 @@
-import { InputText } from 'primereact/inputtext';
+import { InputText as InputTexts } from 'primereact/inputtext';
 import { FloatLabel } from 'primereact/floatlabel';
 
-const InputTextz = (props) => {
+const InputText = (props) => {
   const { label, ...prop } = props;
   return (
     <div className={`w-full h-12 relative flex items-center`}>
       <FloatLabel className="w-full">
-        <InputText
+        <InputTexts
           id={label}
           className="w-full h-12 rounded-md p-4 border-2 border-[var(--primary-blue)] outline-none"
           {...prop}
@@ -19,4 +19,4 @@ const InputTextz = (props) => {
   );
 };
 
-export default InputTextz;
+export default InputText;
