@@ -23,9 +23,9 @@ function generateOTP() {
 export const authController = {
   registerUser: async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { username, email, password } = req.body;
 
-      if (!name || !email || !password) {
+      if (!username || !email || !password) {
         res.status(400).json({ message: "Vui lòng nhập đầy đủ thông tin." });
       }
       if (password.length < 8 || password.length > 16) {
@@ -41,7 +41,7 @@ export const authController = {
       const hashed = await bcrypt.hash(password, salt);
 
       // create new User
-      const newUser = await new User({ name, email, password: hashed });
+      const newUser = await new User({ username, email, password: hashed });
 
       //save to DB
       const user = await newUser.save();
@@ -76,9 +76,9 @@ export const authController = {
   // LOGIN
   loginUser: async (req, res) => {
     try {
-      const user = await User.findOne({ account: req.body.account });
+      const user = await User.findOne({ username: req.body.username });
       if (!user) {
-        return res.status(404).json("Wrong account!");
+        return res.status(404).json("Username is not valid!");
       }
       const validPassword = await bcrypt.compare(
         req.body.password,
@@ -99,7 +99,9 @@ export const authController = {
           sameSite: "strict",
         });
         const { password, ...other } = user._doc;
-        res.status(200).json({ ...other, accessToken });
+        res
+          .status(200)
+          .json({ success: true, data: { ...other, accessToken } });
       }
     } catch (error) {
       res.status(500).json(error);

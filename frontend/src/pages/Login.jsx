@@ -5,15 +5,28 @@ import { FloatLabel } from 'primereact/floatlabel';
 import shoesImg from '../assets/airmax97.jpg';
 import logo from '../assets/logoShoes.png';
 import { Button, InputText } from '@/components/uiCore/index';
+import { loginApi } from '@/api/auth/loginApi';
+import { useUserState } from '@/store/userState';
 
 function Login() {
-  const [account, setAccount] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const { setUserInfo } = useUserState();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/');
+    try {
+      const data = { username, password };
+      const res = await loginApi(data);
+      if (res.success) {
+        navigate('/');
+        setUserInfo(res?.data);
+      }
+    } catch (error) {
+      return error;
+    }
   };
   return (
     <div className="flex flex-row w-full h-screen">
@@ -27,8 +40,8 @@ function Login() {
         >
           <img className="w-30 h-30" alt="logo" src={logo} />
           <InputText
-            value={account}
-            onChange={(e) => setAccount(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             label="Tài khoản"
           />
           <InputPassword value={password} setPassword={setPassword} type={'password'} />
