@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 export const ButtonSidebar = (props) => {
   const [rotated, setRotated] = useState(false);
-  const { className, onClick, ...prop } = props;
+  const { className, onClick, noIcon, ...prop } = props;
 
   const handleClick = (e) => {
     setRotated(!rotated);
@@ -17,11 +17,13 @@ export const ButtonSidebar = (props) => {
       {...prop}
     >
       {props.children}
-      <span
-        className={`pi pi-angle-up transform transition-transform duration-300 ${
-          rotated ? 'rotate-180' : 'rotate-0'
-        }`}
-      />
+      {!noIcon && (
+        <span
+          className={`pi pi-angle-up transform transition-transform duration-300 ${
+            rotated ? 'rotate-180' : 'rotate-0'
+          }`}
+        />
+      )}
     </button>
   );
 };

@@ -59,7 +59,7 @@ export const authController = {
         admin: user.admin,
       },
       process.env.MY_ACCESS_KEY,
-      { expiresIn: "30m" }
+      { expiresIn: "10s" }
     );
   },
   generateRefreshToken: (user) => {
@@ -109,10 +109,8 @@ export const authController = {
   },
 
   requestRefreshToken: async (req, res) => {
-    //take refreshToken from user
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("You're not authenticated");
-
     if (!refreshTokens.includes(refreshToken)) {
       return res.status(403).json("Refesh is not valid");
     }
@@ -167,7 +165,6 @@ export const authController = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: "OTP đặt lại mật khẩu",
-        // text: `Mã OTP của bạn là: ${otp}. Hết hạn sau 5 phút.`,
         html: `<h2>Mã OTP của bạn là: ${otp}</h2>
                 <h4>Mã OTP sẽ hết hạn sau 5 phút.</h4>`,
       });
