@@ -35,9 +35,9 @@ function Header({ toggleSidebar, setToggleSidebar }) {
 
   return (
     <div
-      className={`h-[var(--height-header)] bg-white border-b border-b-gray-400 
+      className={`h-[var(--height-header)] bg-white border-b border-b-gray-300 
       flex flex-row items-center justify-start px-8 gap-4 ${toggleSidebar ? 'ml-[var(--width-sidebar)]' : 'ml-0'}
-        transition-all duration-500 ease-in-out`}
+        transition-all duration-500 ease-in-out sticky z-50`}
     >
       <Button
         className="!bg-[var(--primary-blue)] hover:!bg-[var(--primary-blue-hover)]"
