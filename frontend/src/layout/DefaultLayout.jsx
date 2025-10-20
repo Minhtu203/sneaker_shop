@@ -1,16 +1,23 @@
 import Header from '@/components/base/Header';
 import Sidebar from '@/components/base/SideBar';
 import { Button } from '@/components/uiCore/index';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 function DefaultLayout(props) {
   const { className, ...prop } = props;
+  const [toggleSidebar, setToggleSidebar] = useState(true);
+
   return (
     <div className={`${className} flex flex-row`} {...prop}>
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header />
-        <div className="flex-1 overflow-auto">{props.children}</div>
+      <Sidebar toggleSidebar={toggleSidebar} />
+      <div className="flex flex-col w-full h-full">
+        <Header toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar} />
+        <div
+          className={`flex-1 overflow-auto h-full ${toggleSidebar ? 'ml-[var(--width-sidebar)]' : 'ml-0'} transition-all duration-500 ease-in-out`}
+        >
+          {props.children}
+        </div>
       </div>
     </div>
   );

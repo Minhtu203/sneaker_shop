@@ -1,17 +1,17 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Button, InputText, Menu } from '../uiCore/index';
 import { useUserState } from '@/store/userState';
 import { ButtonSidebar } from '../uiCore/Button/Button';
 import { CreateAxios } from '@/lib/axios';
 import { logoutApi } from '@/api/auth/logoutApi';
 import { useNavigate } from 'react-router-dom';
+import { IconField } from '../uiCore/Form/IconField ';
+import { InputIcon, InputTextz } from '../uiCore/Form/InputIcon ';
 
-function Header() {
+function Header({ toggleSidebar, setToggleSidebar }) {
   const { userInfo, clearUserInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
   const navigate = useNavigate();
-
-  console.log(999999, userInfo);
 
   let items = [
     {
@@ -30,18 +30,27 @@ function Header() {
       },
     },
   ];
-  const [toggleUser, setToggleUser] = useState(false);
   const menu = useRef(null);
 
   return (
-    <div className="h-[var(--height-header)] w-full bg-white border-b border-b-gray-400 flex flex-row items-center justify-start px-8">
+    <div
+      className={`h-[var(--height-header)] bg-white border-b border-b-gray-400 
+      flex flex-row items-center justify-start px-8 gap-4 ${toggleSidebar ? 'ml-[var(--width-sidebar)]' : 'ml-0'}
+        transition-all duration-500 ease-in-out`}
+    >
+      <Button
+        className="!bg-[var(--primary-blue)] hover:!bg-[var(--primary-blue-hover)]"
+        icon="pi pi-align-justify"
+        aria-label="Filter"
+        onClick={() => setToggleSidebar(!toggleSidebar)}
+      />
       {/* input search */}
-      <div className="relative w-[15rem]">
-        <i className="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-        <InputText placeholder="Tìm kiếm..." className="pl-10 w-full" />
-      </div>
+      <IconField iconPosition="left">
+        <InputIcon className="pi pi-search"> </InputIcon>
+        <InputTextz placeholder="Search" />
+      </IconField>
 
-      <div className="w-[6rem] ml-auto">
+      <div className="flex flex-row items-center ml-auto">
         <ButtonSidebar
           onClick={(e) => menu.current.toggle(e)}
           label={userInfo?.username}
