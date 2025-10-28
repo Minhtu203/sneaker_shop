@@ -1,14 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { deleteShoesById } from '@/api/admin/shoesSectionApi';
 import { getAllShoes } from '@/api/homeApi';
+import { formattedDate } from '@/components/uiCore/Data/DataTable';
 import { Column, DataTable } from '@/components/uiCore/index';
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
+import { Toastz } from '@/utils/Toast';
 import React, { useEffect, useState } from 'react';
 
-export default function ShoesSection() {
+export default function ShoesSection({ toast }) {
   const { userInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
   const [allShoes, setAllShoes] = useState([]);
+  const [deleteShoes, setDeleteShoes] = useState('');
 
+  // get all shoes
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,13 +25,29 @@ export default function ShoesSection() {
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
+  }, [userInfo, deleteShoes]);
+
+  // delete shoes
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (deleteShoes) {
+          const res = await deleteShoesById(axiosJWT, userInfo?.accessToken, deleteShoes);
+          Toastz(res.data, toast);
+          setDeleteShoes('');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [deleteShoes]);
 
   return (
     <div className="flex flex-col">
-      {/* <Textz className="text-3xl font-bold mb-8">Users</Textz> */}
       <DataTable
+        toast={toast}
+        setDelete={setDeleteShoes}
         value={allShoes}
         paginator
         action
@@ -37,7 +59,9 @@ export default function ShoesSection() {
         <Column sortable header="Name" field="name" />
         <Column
           header="Image"
-          body={(i) => <img src={i?.img[0]} alt="shoes" className="w-20 h-20 rounded-2xl" />}
+          body={(i) => (
+            <img src={i?.colors?.[0]?.img?.[0]} alt="shoes" className="w-20 h-20 rounded-2xl" />
+          )}
         />
         <Column
           sortable
@@ -49,6 +73,9 @@ export default function ShoesSection() {
             })
           }
         />
+        <Column header="Created at" body={(i) => formattedDate(i?.createdAt)} />
+        <Column header="Is featured" body={(i) => i.isFeatured} />
+        <Column header="Category" body={(i) => i.category} />
       </DataTable>
     </div>
   );

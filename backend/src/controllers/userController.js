@@ -8,19 +8,19 @@ export const userController = {
       if (!user) {
         return res.status(404).json({
           success: false,
-          message: "Người dùng không tồn tại.",
+          message: "Người dùng không tồn tại",
           deletedUser: user,
         });
       }
       res.status(200).json({
         success: true,
-        message: "Xóa thành công!",
+        message: "Xóa người dùng thành công",
         deletedUser: user,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Lỗi khi xóa người dùng.",
+        message: "Lỗi khi xóa người dùng",
         error: error.message,
       });
     }
@@ -32,7 +32,7 @@ export const userController = {
       if (!user) {
         res.status(400).json({
           success: false,
-          message: "Người dùng không tồn tại.",
+          message: "Người dùng không tồn tại",
         });
       }
       res.status(200).json({
@@ -43,7 +43,7 @@ export const userController = {
       if (error.kind === "ObjectId") {
         return res.status(400).json({
           success: false,
-          message: "ID người dùng không hợp lệ.",
+          message: "ID người dùng không hợp lệ",
         });
       }
 

@@ -3,21 +3,27 @@ import mongoose from "mongoose";
 const shoesScheme = new mongoose.Schema(
   {
     name: { type: String, require: true, trim: true },
-    img: [{ type: String, require: true, trim: true }],
+    // img: [{ type: String, require: true, trim: true }],
     brand: { type: String, require: true, trim: true },
     description: { type: String, default: "" },
     price: { type: Number, require: true, min: 0 },
-    sizes: [
+    colors: [
       {
-        size: { type: Number, require: true },
-        stock: { type: Number, default: 0, min: 0 },
+        colorName: { type: String, require: true, trim: true },
+        color: { type: String, require: true, trim: true },
+        img: [{ type: String, require: true, trim: true }],
+        sizes: [
+          {
+            size: { type: Number, require: true },
+            stock: { type: Number, default: 0, min: 0 },
+          },
+        ],
       },
     ],
-    colors: [{ colorName: { type: String, require: true }, color: [String] }],
     category: { type: String, default: "Sneaker" },
     gender: {
       type: String,
-      enum: ["men", "women", "unisex"],
+      enum: ["Men", "Women", "Unisex"],
       default: "unisex",
     },
     rating: {
@@ -25,7 +31,6 @@ const shoesScheme = new mongoose.Schema(
       count: { type: Number, default: 0 },
     },
     isFeatured: { type: Boolean, default: false },
-    createAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

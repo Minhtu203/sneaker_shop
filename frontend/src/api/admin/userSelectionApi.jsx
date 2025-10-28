@@ -5,17 +5,18 @@ export const getAllUsers = async (axiosJWT, accessToken) => {
       withCredentials: true,
     });
   } catch (error) {
-    console.error(error);
+    if (error.response) return error.response;
   }
 };
 
 export const deleteUserApi = async (axiosJWT, accessToken, userId) => {
   try {
-    return await axiosJWT.delete(`/api/user/${userId}`, {
+    const res = await axiosJWT.delete(`/api/user/${userId}`, {
       headers: { token: `Bearer ${accessToken}` },
       withCredentials: true,
     });
+    return res;
   } catch (error) {
-    console.error(error);
+    if (error.response) return error.response;
   }
 };

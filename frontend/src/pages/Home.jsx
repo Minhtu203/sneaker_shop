@@ -1,22 +1,14 @@
 import { getAllShoes } from '@/api/homeApi';
-import { Button } from '@/components/uiCore/index';
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
 import CardShoes from '@/utils/CardShoes';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const { userInfo, clearUserInfo, setUserInfo } = useUserState();
+  const { userInfo, setUserInfo } = useUserState();
   const [allShoes, setAllShoes] = useState([]);
 
-  const navigate = useNavigate();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
-
-  const handleLogout = () => {
-    clearUserInfo();
-    navigate('/login');
-  };
 
   useEffect(() => {
     const fetchShoes = async () => {

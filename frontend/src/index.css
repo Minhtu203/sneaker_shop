@@ -79,3 +79,7 @@ body {
   color: var(--primary-yellow) !important;
   opacity: 1;
 }
+
+.p-rating .p-rating-icon {
+    color: var(--primary-blue);
+}

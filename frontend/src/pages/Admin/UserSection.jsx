@@ -2,15 +2,16 @@ import { deleteUserApi, getAllUsers } from '@/api/admin/userSelectionApi';
 import { Column, DataTable } from '@/components/uiCore/index';
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
+import { Toastz } from '@/utils/Toast';
 import { useEffect, useState } from 'react';
 
-export default function UserSection(props) {
-  const { className, ...prop } = props;
+export default function UserSection({ toast }) {
   const { userInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
   const [allUsers, setAllUsers] = useState([]);
   const [deleteUser, setDeleteUser] = useState('');
 
+  // get all user
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,11 +25,13 @@ export default function UserSection(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo, deleteUser]);
 
+  // api delete user
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (deleteUser) {
-          await deleteUserApi(axiosJWT, userInfo?.accessToken, deleteUser);
+          const res = await deleteUserApi(axiosJWT, userInfo?.accessToken, deleteUser);
+          Toastz(res.data, toast);
           setDeleteUser('');
         }
       } catch (error) {
@@ -40,8 +43,14 @@ export default function UserSection(props) {
   }, [deleteUser]);
 
   return (
-    <div className={`${className} flex flex-col`} {...prop}>
-      <DataTable value={allUsers} action setDelete={setDeleteUser} totalRecords={allUsers?.length}>
+    <div className={`flex flex-col`}>
+      <DataTable
+        toast={toast}
+        value={allUsers}
+        action
+        setDelete={setDeleteUser}
+        totalRecords={allUsers?.length}
+      >
         <Column sortable header="Username" field="username" />
         <Column sortable header="Email" field="email" />
         <Column sortable header="Role" field="role" />

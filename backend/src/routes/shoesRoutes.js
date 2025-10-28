@@ -39,4 +39,11 @@ router.delete(
   shoesController.deleteShoes
 );
 
+// get brand Jordan shoes
+router.get(
+  "/getJordanShoes",
+  middlewareController.verifyToken,
+  shoesController.getJordanShoes
+);
+
 export default router;

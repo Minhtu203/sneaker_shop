@@ -64,7 +64,7 @@ function App() {
               path={route.path}
               element={
                 <Layout>
-                  <Page />
+                  <Page toast={toast} />
                 </Layout>
               }
             />

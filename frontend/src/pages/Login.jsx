@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FloatLabel } from 'primereact/floatlabel';
 
+import { FloatLabel } from 'primereact/floatlabel';
 import shoesImg from '../assets/airmax97.jpg';
 import logo from '../assets/logoShoes.png';
 import { Button, InputText } from '@/components/uiCore/index';
 import { loginApi } from '@/api/auth/loginApi';
 import { useUserState } from '@/store/userState';
+import { Toastz } from '@/utils/Toast';
 
 function Login({ toast }) {
   const [username, setUsername] = useState('');
@@ -20,12 +21,13 @@ function Login({ toast }) {
     try {
       const data = { username, password };
       const res = await loginApi(data);
-      if (res.success) {
+      Toastz(res.data, toast);
+      if (res.success === true) {
         navigate('/');
         setUserInfo(res?.data);
       }
     } catch (error) {
-      return error;
+      console.error(error);
     }
   };
   return (

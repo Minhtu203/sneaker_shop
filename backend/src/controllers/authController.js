@@ -47,15 +47,11 @@ export const authController = {
           .status(409)
           .json({ success: false, message: "Email đã được đăng ký." });
       }
-
       // hask password
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(password, salt);
 
-      // create new User
       const newUser = await new User({ username, email, password: hashed });
-
-      //save to DB
       const user = await newUser.save();
       res.status(200).json({
         success: true,
@@ -75,7 +71,7 @@ export const authController = {
         role: user.role,
       },
       process.env.MY_ACCESS_KEY,
-      { expiresIn: "30m" }
+      { expiresIn: "1d" }
     );
   },
   generateRefreshToken: (user) => {
@@ -92,16 +88,22 @@ export const authController = {
   // LOGIN
   loginUser: async (req, res) => {
     try {
-      const user = await User.findOne({ username: req.body.username });
+      const user = await User.findOne({
+        username: req.body.username,
+      });
       if (!user) {
-        return res.status(404).json("Username is not valid!");
+        return res
+          .status(404)
+          .json({ success: false, message: "Username is not valid!" });
       }
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
       if (!validPassword) {
-        return res.status(404).json("Wrong password!");
+        return res
+          .status(404)
+          .json({ success: false, message: "Wrong password!" });
       }
       if (user && validPassword) {
         const accessToken = authController.generateAccessToken(user);

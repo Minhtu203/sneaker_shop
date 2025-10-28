@@ -28,20 +28,23 @@ function Sidebar({ toggleSidebar }) {
           Home
         </ButtonSidebar>
         <ButtonSidebar
+          onClick={() => navigate('/shoes/jordan')}
           noIcon={true}
-          className={`${location.pathname === '/jordan' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
+          className={`${location.pathname === '/shoes/jordan' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
           Jordan
         </ButtonSidebar>
         <ButtonSidebar
+          onClick={() => navigate('/shoes/airmax')}
           noIcon={true}
-          className={`${location.pathname === '/airmax' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
+          className={`${location.pathname === '/shoes/airmax' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
           Airmax
         </ButtonSidebar>
         <ButtonSidebar
+          onClick={() => navigate('/shoes/nike')}
           noIcon={true}
-          className={`${location.pathname === '/nike' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
+          className={`${location.pathname === '/shoes/nike' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
           Nike
         </ButtonSidebar>
@@ -50,10 +53,10 @@ function Sidebar({ toggleSidebar }) {
           show={sport}
           className={`${location.pathname === '/sport' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
-          <ButtonV3>Basketball</ButtonV3>
-          <ButtonV3>Football</ButtonV3>
-          <ButtonV3>Golf</ButtonV3>
-          <ButtonV3>Tennis</ButtonV3>
+          <ButtonV3 onClick={() => navigate('/shoes/basketball')}>Basketball</ButtonV3>
+          <ButtonV3 onClick={() => navigate('/shoes/football')}>Football</ButtonV3>
+          <ButtonV3 onClick={() => navigate('/shoes/golf')}>Golf</ButtonV3>
+          <ButtonV3 onClick={() => navigate('/shoes/tennis')}>Tennis</ButtonV3>
         </ShowNavSidebar>
 
         {userInfo?.role === 'admin' && (

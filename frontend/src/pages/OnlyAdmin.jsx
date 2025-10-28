@@ -24,14 +24,14 @@ const Header = ({ selected, setSelected }) => {
   );
 };
 
-function OnlyAdmin() {
+function OnlyAdmin({ toast }) {
   const [selected, setSelected] = useState(null);
   return (
     <div className="w-full h-full">
       <Header selected={selected} setSelected={setSelected} />
       <div className="w-full p-4">
-        {selected === 'user' && <UserSection />}
-        {selected === 'shoes' && <ShoesSection />}
+        {selected === 'user' && <UserSection toast={toast} />}
+        {selected === 'shoes' && <ShoesSection toast={toast} />}
       </div>
     </div>
   );

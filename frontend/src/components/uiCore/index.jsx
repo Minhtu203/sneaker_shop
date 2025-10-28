@@ -10,3 +10,4 @@ export { default as DropDown } from './Form/DropDown';
 export { default as Toast } from './Messages/Toast';
 export { default as Dialog } from './Overlay/Dialog';
 export { default as InputOtp } from './Form/InputOtp';
+export { default as Rating } from './Form/Rating';
