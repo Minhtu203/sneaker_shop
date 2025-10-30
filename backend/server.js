@@ -40,4 +40,3 @@ app.use("/api/cart", cartRoutes);
 //   console.log(`Server is running on http://${HOST}:${PORT}`)
 // );
 export const handler = serverless(app);
-// export default app;
