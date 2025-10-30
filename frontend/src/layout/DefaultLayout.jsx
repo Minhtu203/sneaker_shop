@@ -16,7 +16,7 @@ function DefaultLayout(props) {
         <div
           className={`overflow-auto flex-1
              ${toggleSidebar ? 'ml-[var(--width-sidebar)]' : 'ml-0'}
-           transition-all duration-500 ease-in-out`}
+           transition-all duration-500 ease-in-out overflow-auto`}
         >
           {props.children}
         </div>

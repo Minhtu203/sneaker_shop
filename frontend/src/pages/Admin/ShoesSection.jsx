@@ -2,17 +2,30 @@
 import { deleteShoesById } from '@/api/admin/shoesSectionApi';
 import { getAllShoes } from '@/api/homeApi';
 import { formattedDate } from '@/components/uiCore/Data/DataTable';
-import { Column, DataTable } from '@/components/uiCore/index';
+import { Column, DataTable, InputText } from '@/components/uiCore/index';
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
 import { Toastz } from '@/utils/Toast';
 import React, { useEffect, useState } from 'react';
+
+const UpdateInput = () => {
+  return (
+    <div className="flex flex-col gap-6 pt-2">
+      <InputText label="asdf" />
+      <InputText label="asdf" />
+      <InputText label="asdf" />
+      <InputText label="asdf" />
+      <InputText label="asdf" />
+    </div>
+  );
+};
 
 export default function ShoesSection({ toast }) {
   const { userInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
   const [allShoes, setAllShoes] = useState([]);
   const [deleteShoes, setDeleteShoes] = useState('');
+  const [updateShoes, setUpdateShoes] = useState('');
 
   // get all shoes
   useEffect(() => {
@@ -25,7 +38,7 @@ export default function ShoesSection({ toast }) {
       }
     };
     fetchData();
-  }, [userInfo, deleteShoes]);
+  }, [userInfo, deleteShoes, updateShoes]);
 
   // delete shoes
   useEffect(() => {
@@ -48,6 +61,8 @@ export default function ShoesSection({ toast }) {
       <DataTable
         toast={toast}
         setDelete={setDeleteShoes}
+        setUpdate={setUpdateShoes}
+        updateDataChildren={<UpdateInput />}
         value={allShoes}
         paginator
         action

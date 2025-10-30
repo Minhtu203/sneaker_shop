@@ -97,7 +97,7 @@ const ShowNavSidebar = (props) => {
   const { className, show, ...prop } = props;
   return (
     <div
-      className={`${className} ml-4 w-9/10 flex flex-col gap-2 overflow-hidden transition-all duration-800 ease-in-out transform ${
+      className={`${className} p-2 ml-4 w-9/10 flex flex-col gap-2 overflow-hidden transition-all duration-800 ease-in-out transform ${
         show ? 'opacity-100 translate-y-0 max-h-400' : 'opacity-0 translate-y-4 max-h-0'
       }`}
       {...prop}

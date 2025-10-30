@@ -1,29 +1,5 @@
 import mongoose from "mongoose";
 
-const cartItemSchema = new mongoose.Schema({
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Shoes",
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    min: 1,
-    default: 1,
-  },
-  size: {
-    type: Number,
-  },
-  color: {
-    type: String,
-  },
-  addedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
 const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true },
@@ -37,7 +13,14 @@ const userSchema = new mongoose.Schema(
     avatar: { type: String, trim: true },
     password: { type: String, required: true, trim: true },
     role: { type: String, default: "user" },
-    shopping_cart: [cartItemSchema],
+
+    shopping_cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cart",
+      require: true,
+    },
+
+    favourites: [],
     resetOtp: { type: String },
     resetOtpExpires: { type: Date },
   },

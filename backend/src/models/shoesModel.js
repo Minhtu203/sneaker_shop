@@ -17,8 +17,10 @@ const shoesScheme = new mongoose.Schema(
             size: { type: Number, require: true },
             stock: { type: Number, default: 0, min: 0 },
           },
+          { _id: false },
         ],
       },
+      { _id: false },
     ],
     category: { type: String, default: "Sneaker" },
     gender: {
