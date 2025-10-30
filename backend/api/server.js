@@ -1,29 +1,19 @@
-import "dotenv/config";
 import express from "express";
+import serverless from "serverless-http";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "../src/config/db.js";
 import cookieParser from "cookie-parser";
-import serverless from "serverless-http";
+import connectDB from "../src/config/db.js";
 
 dotenv.config();
-
 const app = express();
-
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: process.env.CLIENT, credentials: true }));
 
 connectDB();
 
-const CLIENT = process.env.CLIENT;
-app.use(
-  cors({
-    origin: CLIENT,
-    credentials: true,
-  })
-);
-
-// import routes
+// routes
 import authRoutes from "../src/routes/authRoutes.js";
 import userRoutes from "../src/routes/userRoutes.js";
 import shoesRoutes from "../src/routes/shoesRoutes.js";
