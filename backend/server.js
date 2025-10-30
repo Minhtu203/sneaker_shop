@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 import cookieParser from "cookie-parser";
+import serverless from "serverless-http";
 
 // const PORT = process.env.PORT;
 const CLIENT = process.env.CLIENT;
@@ -38,5 +39,5 @@ app.use("/api/cart", cartRoutes);
 // app.listen(PORT, HOST, () =>
 //   console.log(`Server is running on http://${HOST}:${PORT}`)
 // );
-export default serverless(app);
+export const handler = serverless(app);
 // export default app;
