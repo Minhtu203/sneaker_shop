@@ -112,9 +112,11 @@ export const authController = {
 
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
-          secure: false,
           path: "/",
-          sameSite: "strict",
+          // secure: false,
+          // sameSite: "strict",
+          secure: true,
+          sameSite: "None",
         });
         const { password, ...other } = user._doc;
         res
