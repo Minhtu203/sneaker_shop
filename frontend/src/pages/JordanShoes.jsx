@@ -24,7 +24,7 @@ function JordanShoes() {
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
+  }, []);
 
   return (
     <div className="w-full h-full grid grid-cols-3 gap-4 p-4">

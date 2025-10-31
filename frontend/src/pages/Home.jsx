@@ -25,7 +25,7 @@ function Home() {
     };
     fetchShoes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col">

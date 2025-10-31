@@ -53,7 +53,7 @@ export default function ShoesDetail() {
       }
     };
     fetchData();
-  }, [userInfo]);
+  }, []);
 
   useEffect(() => {
     document.title = `${data?.name || 'Loading...'}`;
