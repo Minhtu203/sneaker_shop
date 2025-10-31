@@ -7,8 +7,8 @@ import cookieParser from "cookie-parser";
 // import serverless from "serverless-http";
 
 // const PORT = process.env.PORT;
-// const CLIENT = process.env.CLIENT;
 // const HOST = process.env.HOST;
+const CLIENT = process.env.CLIENT;
 
 dotenv.config();
 
