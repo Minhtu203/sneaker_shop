@@ -145,9 +145,11 @@ export const authController = {
 
       res.cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
-        secure: false,
         path: "/",
-        sameSite: "strict",
+        // secure: false,
+        // sameSite: "strict",
+        secure: true,
+        sameSite: "None",
       });
       res.status(200).json({ accessToken: newAccessToken });
     });
