@@ -9,7 +9,8 @@ let refreshTokens = [];
 const transporter = nodemailer.createTransport({
   service: "gmail",
   port: process.env.PORT,
-  secure: false, // true for 465, false for other ports
+  // secure: false, // true for 465, false for other ports
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
