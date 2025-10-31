@@ -25,6 +25,13 @@ app.use(
 );
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Server is running on Vercel",
+    status: "OK",
+  });
+});
+
 // import routes
 import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
