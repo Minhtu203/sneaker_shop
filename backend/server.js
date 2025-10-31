@@ -6,9 +6,9 @@ import connectDB from "./src/config/db.js";
 import cookieParser from "cookie-parser";
 // import serverless from "serverless-http";
 
-const PORT = process.env.PORT;
-const CLIENT = process.env.CLIENT;
-const HOST = process.env.HOST;
+// const PORT = process.env.PORT;
+// const CLIENT = process.env.CLIENT;
+// const HOST = process.env.HOST;
 
 dotenv.config();
 
@@ -47,3 +47,4 @@ app.use("/api/cart", cartRoutes);
 //   console.log(`Server is running on http://${HOST}:${PORT}`)
 // );
 // export const handler = serverless(app);
+export default app;
