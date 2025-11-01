@@ -44,13 +44,7 @@ export default function UserSection({ toast }) {
 
   return (
     <div className={`flex flex-col`}>
-      <DataTable
-        toast={toast}
-        value={allUsers}
-        action
-        setDelete={setDeleteUser}
-        totalRecords={allUsers?.length}
-      >
+      <DataTable toast={toast} value={allUsers} action setDelete={setDeleteUser} totalRecords={allUsers?.length}>
         <Column sortable header="Username" field="username" />
         <Column sortable header="Email" field="email" />
         <Column sortable header="Role" field="role" />

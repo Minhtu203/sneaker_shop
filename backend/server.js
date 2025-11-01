@@ -4,10 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 import cookieParser from "cookie-parser";
-// import serverless from "serverless-http";
 
-// const PORT = process.env.PORT;
-// const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 const CLIENT = process.env.CLIENT;
 
 dotenv.config();
@@ -43,8 +41,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/shoes", shoesRoutes);
 app.use("/api/cart", cartRoutes);
 
-// app.listen(PORT, HOST, () =>
-//   console.log(`Server is running on http://${HOST}:${PORT}`)
+// app.listen(PORT, () =>
+//   console.log(`Server is running on http://localhost:${PORT}`)
 // );
-// export const handler = serverless(app);
 export default app;

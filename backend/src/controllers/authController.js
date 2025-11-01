@@ -2,8 +2,9 @@ import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import redisClient from "../config/redis.js";
 
-let refreshTokens = [];
+// let refreshTokens = [];
 
 // Tạo transporter gửi mail
 const transporter = nodemailer.createTransport({
@@ -109,13 +110,20 @@ export const authController = {
       if (user && validPassword) {
         const accessToken = authController.generateAccessToken(user);
         const refreshToken = authController.generateRefreshToken(user);
-        refreshTokens.push(refreshToken);
+        // refreshTokens.push(refreshToken);
+        const EXPIRY_SECONDS = 365 * 24 * 60 * 60; //365 days
+        await redisClient.set(
+          `refreshToken:${user._id}`,
+          refreshToken,
+          "EX",
+          EXPIRY_SECONDS
+        );
 
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
           path: "/",
           // secure: false,
-          // sameSite: "strict",
+          // sameSite: "Strict",
           secure: true,
           sameSite: "None",
         });
@@ -132,42 +140,64 @@ export const authController = {
   requestRefreshToken: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("You're not authenticated");
-    if (!refreshTokens.includes(refreshToken)) {
-      return res.status(403).json("Refesh is not valid");
-    }
-    jwt.verify(refreshToken, process.env.MY_REFRESH_ACCESS_KEY, (err, user) => {
-      if (err) {
-        console.log(err);
+    // if (!refreshTokens.includes(refreshToken)) {
+    //   return res.status(403).json("Refesh is not valid");
+    // }
+    jwt.verify(
+      refreshToken,
+      process.env.MY_REFRESH_ACCESS_KEY,
+      async (err, user) => {
+        if (err) {
+          console.error("Refresh Token Verification Error:", err);
+          return res.status(403).json("Refresh Token is not valid or expired.");
+        }
+        const storedToken = await redisClient.get(`refreshToken:${user.id}`);
+        if (!storedToken || storedToken !== refreshToken) {
+          return res
+            .status(403)
+            .json("Refresh Token mismatch or already revoked.");
+        }
+        // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+
+        //create new accessToken, refreshToken
+        const newAccessToken = authController.generateAccessToken(user);
+        const newRefreshToken = authController.generateRefreshToken(user);
+
+        const EXPIRY_SECONDS = 365 * 24 * 60 * 60; // 365 ngày
+        await redisClient.set(
+          `refreshToken:${user.id}`,
+          newRefreshToken,
+          "EX",
+          EXPIRY_SECONDS
+        );
+
+        // refreshTokens.push(newRefreshToken);
+
+        res.cookie("refreshToken", newRefreshToken, {
+          httpOnly: true,
+          path: "/",
+          // secure: false,
+          // sameSite: "Strict",
+          secure: true,
+          sameSite: "None",
+        });
+        res.status(200).json({ accessToken: newAccessToken });
       }
-      // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-      //create new accessToken, refreshToken
-      const newAccessToken = authController.generateAccessToken(user);
-      const newRefreshToken = authController.generateRefreshToken(user);
-      refreshTokens.push(newRefreshToken);
-
-      res.cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        path: "/",
-        // secure: false,
-        // sameSite: "strict",
-        secure: true,
-        sameSite: "None",
-      });
-      res.status(200).json({ accessToken: newAccessToken });
-    });
+    );
   },
 
   logoutUser: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(400).json("No refresh token found");
     try {
-      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-      res.clearCookie("refreshToken");
-      refreshTokens = refreshTokens.filter(
-        (token) => token !== req.cookies.refreshToken
+      const decoded = jwt.verify(
+        refreshToken,
+        process.env.MY_REFRESH_ACCESS_KEY
       );
+      const userId = decoded.id;
+      await redisClient.del(`refreshToken:${userId}`);
+      res.clearCookie("refreshToken");
+
       res.status(200).json("Logged out !");
     } catch (err) {
       res.status(500).json({ message: "Logout failed", error: err.message });
