@@ -50,7 +50,25 @@ export default function ShoppingCart({ toast }) {
         ))}
       </div>
       <div className="w-4/10 p-4 h-full pt-12">
-        <div className="bg-white w-full h-full rounded-2xl p-12">asdf</div>
+        <div className="bg-white w-full h-full rounded-2xl p-12 flex flex-col gap-4">
+          <Textz className="text-2xl font-bold pb-4">Summary</Textz>
+          <div className="flex flex-row justify-between">
+            <Textz>Subtotal</Textz>
+            <Textz>11111VND</Textz>
+          </div>
+          <div className="flex flex-row justify-between">
+            <Textz>Estimated Delivery & Handling</Textz>
+            <Textz>Free</Textz>
+          </div>
+          <i className="h-[1px] w-full bg-gray-200 my-2" />
+
+          <div className="flex flex-row justify-between">
+            <Textz>Total</Textz>
+            <Textz>1111VND</Textz>
+          </div>
+          <i className="h-[1px] w-full bg-gray-200 my-2" />
+          <Button label="asdf" />
+        </div>
       </div>
     </div>
   );
