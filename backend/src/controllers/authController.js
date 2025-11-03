@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import redisClient from "../config/redis.js";
 
+// let refreshTokens = [];
+
 // Tạo transporter gửi mail
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -71,7 +73,7 @@ export const authController = {
         role: user.role,
       },
       process.env.MY_ACCESS_KEY,
-      { expiresIn: "3m" }
+      { expiresIn: "30d" }
     );
   },
   generateRefreshToken: (user) => {
@@ -111,8 +113,8 @@ export const authController = {
         // refreshTokens.push(refreshToken);
         const EXPIRY_SECONDS = 365 * 24 * 60 * 60; //365 days
         await redisClient.set(
+          `refreshToken:${user._id}`,
           refreshToken,
-          user._id.toString(),
           "EX",
           EXPIRY_SECONDS
         );
@@ -120,10 +122,10 @@ export const authController = {
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
           path: "/",
-          // secure: false,
-          // sameSite: "Strict",
-          secure: true,
-          sameSite: "None",
+          secure: false,
+          sameSite: "Strict",
+          // secure: true,
+          // sameSite: "None",
         });
         const { password, ...other } = user._doc;
         res
@@ -138,7 +140,9 @@ export const authController = {
   requestRefreshToken: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("You're not authenticated");
-
+    // if (!refreshTokens.includes(refreshToken)) {
+    //   return res.status(403).json("Refesh is not valid");
+    // }
     jwt.verify(
       refreshToken,
       process.env.MY_REFRESH_ACCESS_KEY,
@@ -147,14 +151,13 @@ export const authController = {
           console.error("Refresh Token Verification Error:", err);
           return res.status(403).json("Refresh Token is not valid or expired.");
         }
-
-        const storedUserId = await redisClient.get(refreshToken);
-        if (!storedUserId || storedUserId !== user.id.toString()) {
+        const storedToken = await redisClient.get(`refreshToken:${user.id}`);
+        if (!storedToken || storedToken !== refreshToken) {
           return res
             .status(403)
             .json("Refresh Token mismatch or already revoked.");
         }
-        await redisClient.del(refreshToken);
+        // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
         //create new accessToken, refreshToken
         const newAccessToken = authController.generateAccessToken(user);
@@ -162,19 +165,21 @@ export const authController = {
 
         const EXPIRY_SECONDS = 365 * 24 * 60 * 60; // 365 ngày
         await redisClient.set(
+          `refreshToken:${user.id}`,
           newRefreshToken,
-          user.id.toString(),
           "EX",
           EXPIRY_SECONDS
         );
 
+        // refreshTokens.push(newRefreshToken);
+
         res.cookie("refreshToken", newRefreshToken, {
           httpOnly: true,
           path: "/",
-          // secure: false,
-          // sameSite: "Strict",
-          secure: true,
-          sameSite: "None",
+          secure: false,
+          sameSite: "Strict",
+          // secure: true,
+          // sameSite: "None",
         });
         res.status(200).json({ accessToken: newAccessToken });
       }
@@ -189,8 +194,8 @@ export const authController = {
         refreshToken,
         process.env.MY_REFRESH_ACCESS_KEY
       );
-      // const userId = decoded.id;
-      await redisClient.del(refreshToken);
+      const userId = decoded.id;
+      await redisClient.del(`refreshToken:${userId}`);
       res.clearCookie("refreshToken");
 
       res.status(200).json("Logged out !");
