@@ -16,7 +16,7 @@ router.post("/login", authController.loginUser);
 //logout
 router.post(
   "/logout",
-  // middlewareController.verifyToken,
+  middlewareController.verifyToken,
   authController.logoutUser
 );
 
