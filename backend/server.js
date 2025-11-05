@@ -35,11 +35,13 @@ import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import shoesRoutes from "./src/routes/shoesRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
+import favouritesRoutes from "./src/routes/favouritesRoutes.js";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/shoes", shoesRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/favourite", favouritesRoutes);
 
 // app.listen(PORT, () =>
 //   console.log(`Server is running on http://localhost:${PORT}`)

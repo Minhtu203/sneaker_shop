@@ -42,14 +42,21 @@ function Header({ toggleSidebar, setToggleSidebar }) {
 
   let items = [
     {
-      label: 'Hồ sơ',
+      label: 'Profile',
       icon: 'pi pi-user',
       command: () => {
         navigate(`/user-profile`);
       },
     },
     {
-      label: 'Đăng xuất',
+      label: 'Favourite',
+      icon: 'pi pi-heart',
+      command: () => {
+        navigate('/favourites');
+      },
+    },
+    {
+      label: 'Log out',
       icon: 'pi pi-sign-out',
       command: () => {
         logoutApi(userInfo?._id, clearUserInfo, userInfo?.accessToken, axiosJWT);
@@ -106,6 +113,13 @@ function Header({ toggleSidebar, setToggleSidebar }) {
           rounded
           outlined
           onClick={() => navigate('/shopping_cart')}
+        />
+        <Button
+          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.3rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
+          icon="pi pi-heart"
+          rounded
+          outlined
+          onClick={() => navigate('/favourites')}
         />
         <Button
           className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.3rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema(
     },
     fullName: { type: String, trim: true },
     avatar: { type: String, trim: true },
-    favourites: [],
     resetOtp: { type: String },
     resetOtpExpires: { type: Date },
   },

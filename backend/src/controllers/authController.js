@@ -73,7 +73,7 @@ export const authController = {
         role: user.role,
       },
       process.env.MY_ACCESS_KEY,
-      { expiresIn: "30s" }
+      { expiresIn: "30d" }
     );
   },
   generateRefreshToken: (user) => {
@@ -140,9 +140,6 @@ export const authController = {
   requestRefreshToken: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json("You're not authenticated");
-    // if (!refreshTokens.includes(refreshToken)) {
-    //   return res.status(403).json("Refesh is not valid");
-    // }
     jwt.verify(
       refreshToken,
       process.env.MY_REFRESH_ACCESS_KEY,

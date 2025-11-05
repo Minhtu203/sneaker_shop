@@ -9,6 +9,7 @@ import { Textz } from '@/components/base/Textz';
 import { SizeGuideIcon } from '@/assets/icon/sizeGuide';
 import { addItemToCart } from '@/api/shoppingCartApi';
 import { Toastz } from '@/utils/Toast';
+import { addItemToFavourites } from '@/api/favourites/favouritesApi';
 
 const ShoeGallery = ({ shoeImg, props }) => {
   const itemTemplate = (item) => {
@@ -67,7 +68,6 @@ export default function ShoesDetail({ toast }) {
       setSelectedColor(data.colors?.[0]);
     }
   }, [data]);
-  // console.log(22222, selectedColor);
 
   const idScreenShoes = useParams();
   const [size, setSize] = useState(null);
@@ -80,6 +80,11 @@ export default function ShoesDetail({ toast }) {
     };
     const res = await addItemToCart(axiosJWT, userInfo?.accessToken, payload);
     console.log(2222, res.data);
+    Toastz(res.data, toast);
+  };
+
+  const handleFavourites = async () => {
+    const res = await addItemToFavourites(axiosJWT, userInfo?.accessToken, id);
     Toastz(res.data, toast);
   };
 
@@ -134,9 +139,9 @@ export default function ShoesDetail({ toast }) {
             label="Add to Bag"
           />
           <Button
-            // outlined
             className="!rounded-[2rem] h-14 !bg-[var(--light)] !border !border-[var(--primary-blue)] !text-[var(--primary-blue)] justify-center"
             label="Favourite"
+            onClick={handleFavourites}
           >
             <span className="pi pi-heart" />
           </Button>

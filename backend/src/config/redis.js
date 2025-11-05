@@ -4,7 +4,7 @@ const redisClient = new Redis({
   port: process.env.REDIS_PORT || 6379,
   host: process.env.REDIS_HOST || "127.0.0.1",
 
-  // uncomment when deploy product
+  // comment when deploy local
   password: process.env.REDIS_PASSWORD,
   tls: {
     rejectUnauthorized: false,
