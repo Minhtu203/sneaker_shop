@@ -108,21 +108,21 @@ function Header({ toggleSidebar, setToggleSidebar }) {
 
       <div className="flex gap-4 flex-row items-center ml-auto">
         <Button
-          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.3rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
+          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.4rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
           icon="pi pi-shopping-cart"
           rounded
           outlined
           onClick={() => navigate('/shopping_cart')}
         />
         <Button
-          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.3rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
+          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.4rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
           icon="pi pi-heart"
           rounded
           outlined
           onClick={() => navigate('/favourites')}
         />
         <Button
-          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.3rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
+          className="!text-[var(--primary-blue)] focus:!text-[var(--primary-blue)] !text-12 !p-[1.4rem] focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
           icon="pi pi-bell"
           rounded
           outlined

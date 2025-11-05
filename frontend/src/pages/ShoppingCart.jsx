@@ -67,7 +67,7 @@ export default function ShoppingCart({ toast }) {
             <Textz>1111VND</Textz>
           </div>
           <i className="h-[1px] w-full bg-gray-200 my-2" />
-          <Button label="asdf" />
+          <Button className="!bg-[var(--primary-blue)] !border-none" label="Check out" />
         </div>
       </div>
     </div>
