@@ -157,7 +157,7 @@ export default function ShoesDetail({ toast }) {
         </Textz>
       </div>
       <Dialog
-        className="w-[80%] md:[50vw]"
+        className="w-[80%] md:w-[50vw]"
         header="Size Guide"
         visible={visibleSizeGuide}
         onHide={() => {

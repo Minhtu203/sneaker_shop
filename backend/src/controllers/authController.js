@@ -33,19 +33,19 @@ export const authController = {
           .json({ success: false, message: "Vui lòng nhập đầy đủ thông tin." });
       }
       if (password.length < 8 || password.length > 16) {
-        res
+        return res
           .status(400)
           .json({ success: false, message: "Mật khẩu phải dài 8-16 kí tự." });
       }
       const existingUser = await User.findOne({ username });
       if (existingUser) {
-        res
+        return res
           .status(409)
           .json({ success: false, message: "Username đã được đăng ký." });
       }
       const existingEmail = await User.findOne({ email });
       if (existingEmail) {
-        res
+        return res
           .status(409)
           .json({ success: false, message: "Email đã được đăng ký." });
       }
@@ -58,7 +58,7 @@ export const authController = {
       res.status(200).json({
         success: true,
         data: user,
-        message: "Đăng ký tài khoản thành công",
+        message: "Register successfully",
       });
     } catch (error) {
       res.status(500).json(error);

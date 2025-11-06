@@ -11,7 +11,7 @@ export default function UserPage({ toast }) {
   const { userInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
 
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();

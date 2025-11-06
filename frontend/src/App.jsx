@@ -12,9 +12,9 @@ import { Toast } from './components/uiCore/index';
 function App() {
   const { userInfo } = useUserState();
   const toast = useRef(null);
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+  // useEffect(() => {
+  //   console.log(userInfo);
+  // }, [userInfo]);
 
   return (
     <>
