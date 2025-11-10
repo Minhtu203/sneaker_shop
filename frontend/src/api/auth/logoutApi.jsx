@@ -1,4 +1,4 @@
-export const logoutApi = async (userId, clearUserInfo, accessToken, axiosJWT) => {
+export const logoutApi = async (userId, clearUserInfo, accessToken, axiosJWT, navigate) => {
   try {
     await axiosJWT.post(
       '/api/auth/logout',
@@ -8,8 +8,10 @@ export const logoutApi = async (userId, clearUserInfo, accessToken, axiosJWT) =>
         withCredentials: true,
       }
     );
-    clearUserInfo();
   } catch (error) {
     console.log(error.message);
+  } finally {
+    clearUserInfo();
+    navigate('/login');
   }
 };

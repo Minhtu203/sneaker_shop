@@ -66,8 +66,7 @@ function Header({ toggleSidebar, setToggleSidebar }) {
       label: 'Log out',
       icon: 'pi pi-sign-out',
       command: () => {
-        logoutApi(userInfo?._id, clearUserInfo, userInfo?.accessToken, axiosJWT);
-        if (!userInfo) navigate('/login');
+        logoutApi(userInfo?._id, clearUserInfo, userInfo?.accessToken, axiosJWT, navigate);
       },
     },
   ];
