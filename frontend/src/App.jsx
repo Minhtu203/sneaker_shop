@@ -21,8 +21,6 @@ function App() {
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
   const navigate = useNavigate();
 
-  console.log(222222222, refreshToken);
-
   return (
     <>
       <Toast ref={toast} />
