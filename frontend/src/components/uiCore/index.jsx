@@ -13,3 +13,6 @@ export { default as InputOtp } from './Form/InputOtp';
 export { default as Rating } from './Form/Rating';
 export { default as FileUpload } from './File/FileUpload';
 export { default as AutoComplete } from './Form/AutoComplete';
+export { default as RadioButton } from './Form/RadioButton';
+export { default as InputTextarea } from './Form/InputTextarea';
+export { default as InputNumber } from './Form/InputNumber';

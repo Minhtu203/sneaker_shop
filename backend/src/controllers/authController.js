@@ -73,7 +73,7 @@ export const authController = {
         role: user.role,
       },
       process.env.MY_ACCESS_KEY,
-      { expiresIn: "30d" }
+      { expiresIn: "30s" }
     );
   },
   generateRefreshToken: (user) => {
@@ -154,7 +154,6 @@ export const authController = {
             .status(403)
             .json("Refresh Token mismatch or already revoked.");
         }
-        // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
         //create new accessToken, refreshToken
         const newAccessToken = authController.generateAccessToken(user);
@@ -167,8 +166,6 @@ export const authController = {
           "EX",
           EXPIRY_SECONDS
         );
-
-        // refreshTokens.push(newRefreshToken);
 
         res.cookie("refreshToken", newRefreshToken, {
           httpOnly: true,

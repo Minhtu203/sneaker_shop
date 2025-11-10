@@ -28,6 +28,37 @@ body {
   scrollbar-width: none;     /* Firefox */
 }
 
+/* animation */
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.35s ease-out forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-in forwards;
+}
+
 @layer components {
   .p-galleria-indicator button {
     @apply bg-gray-300 w-3 h-3 rounded-full transition-transform duration-300 ease-in-out;
@@ -80,6 +111,14 @@ body {
   opacity: 1;
 }
 
-.p-rating .p-rating-icon {
-    color: var(--primary-blue);
+/* radio button */
+.p-radiobutton .p-radiobutton-box {
+  border-color: var(--primary-blue) !important; /* màu tím pastel */
+}
+
+.p-radiobutton .p-radiobutton-box {
+  background-color: var(--primary-blue) !important;
+}
+.p-radiobutton-icon {
+  background-color: var(--primary-yellow) !important;
 }

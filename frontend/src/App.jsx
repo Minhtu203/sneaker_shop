@@ -8,13 +8,20 @@ import { privateRoutes, publicRoutes } from '@/routes';
 import DefaultLayout from '@/layout/DefaultLayout';
 import { useUserState } from './store/userState';
 import { Toast } from './components/uiCore/index';
+import Cookies from 'js-cookie';
+import { logoutApi } from './api/auth/logoutApi';
+import { CreateAxios } from './lib/axios';
+import { useNavigate } from 'react-router-dom';
+import { Toastz } from './utils/Toast';
 
 function App() {
-  const { userInfo } = useUserState();
+  const { userInfo, clearUserInfo, setUserInfo } = useUserState();
   const toast = useRef(null);
-  // useEffect(() => {
-  //   console.log(userInfo);
-  // }, [userInfo]);
+  const refreshToken = Cookies.get('refreshToken');
+  let axiosJWT = CreateAxios(userInfo, setUserInfo);
+  const navigate = useNavigate();
+
+  console.log(2222, refreshToken);
 
   return (
     <>
