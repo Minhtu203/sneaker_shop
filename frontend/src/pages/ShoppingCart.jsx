@@ -83,7 +83,7 @@ export default function ShoppingCart({ toast }) {
                   // className="bg-white p-4 rounded-lg"
                 >
                   <div
-                    className={`md:h-26 w-full bg-[var(--light)] rounded-2xl flex flex-row  items-center px-4 py-6 md:py-2 gap-4 relative`}
+                    className={`md:h-26 w-full bg-[var(--light)] rounded-2xl flex flex-row  items-center px-4 py-6 md:py-2 gap-4 relative hover:z-10 cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out`}
                   >
                     <Button
                       onClick={() => setCheckout((prev) => prev.filter((_, i) => i !== index))}
