@@ -6,6 +6,7 @@ import Dialog from '../Overlay/Dialog';
 import { InputPassword } from '@/pages/Login';
 import { Toastz } from '@/utils/Toast';
 import InputText from '../Form/InputText';
+import { InputTextz } from '../Form/InputIcon ';
 
 const VALID_PASSWORD = import.meta.env.VITE_DELETE_PASSWORD;
 
@@ -45,9 +46,31 @@ const DataTable = (props) => {
     setUpdate(id);
   };
 
+  const [filters, setFilters] = useState('');
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    setGlobalFilterValue(value);
+    setFilters(value);
+  };
   return (
     <>
+      <div className="flex justify-end mb-3">
+        <span className="p-input-icon-left">
+          <InputText
+            className="!pl-7 cursor-auto"
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Search shoes"
+          />
+          <i className="pi pi-search text-gray-500 ml-2" />
+        </span>
+      </div>
       <DataTables
+        globalFilter={filters}
+        globalFilterFields={['name', 'brand', 'category', 'gender']}
+        emptyMessage="No shoes found."
         paginator
         rows={5}
         rowsPerPageOptions={[5, 10, 25, 50]}

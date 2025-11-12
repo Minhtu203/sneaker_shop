@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createShoesApi, deleteShoesById } from '@/api/admin/shoesSectionApi';
+import { createShoesApi, deleteShoesById, updateShoesApi } from '@/api/admin/shoesSectionApi';
 import { getAllShoes } from '@/api/homeApi';
 import { Textz } from '@/components/base/Textz';
 import { formattedDate } from '@/components/uiCore/Data/DataTable';
@@ -23,11 +23,9 @@ import { useNavigate } from 'react-router-dom';
 const UpdateInput = () => {
   return (
     <div className="flex flex-col gap-6 pt-2">
-      <InputText label="asdf" />
-      <InputText label="asdf" />
-      <InputText label="asdf" />
-      <InputText label="asdf" />
-      <InputText label="asdf" />
+      <InputText label="Name" />
+      <InputText label="Brand" />
+      <InputText label="Price" />
     </div>
   );
 };
@@ -41,13 +39,14 @@ export default function ShoesSection({ toast }) {
   const [updateShoes, setUpdateShoes] = useState('');
 
   const category = [
-    { name: 'Sneaker' },
-    { name: 'Running' },
-    { name: 'Basketball' },
     { name: 'Training' },
+    { name: 'Basketball' },
+    { name: 'Football' },
+    { name: 'Golf' },
+    { name: 'Tennis' },
+    { name: 'Running' },
     { name: 'Outdoor' },
     { name: 'Life style' },
-    { name: 'Formal' },
   ];
 
   const gender = [{ name: 'Men' }, { name: 'Women' }, { name: 'Unisex' }];
@@ -81,6 +80,24 @@ export default function ShoesSection({ toast }) {
     fetchData();
   }, [deleteShoes]);
 
+  const [idShoesFeatured, setIdShoesFeatured] = useState(null);
+  //update shoes
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (updateShoes) {
+          const data = { isFeatured: idShoesFeatured };
+          const res = await updateShoesApi(axiosJWT, userInfo?.accessToken, updateShoes, data);
+          Toastz(res.data, toast);
+          setUpdateShoes('');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [updateShoes]);
+
   const [visibleCreate, setVisibleCreate] = useState(false);
   const [numberColor, setNumberColor] = useState(null);
 
@@ -100,8 +117,6 @@ export default function ShoesSection({ toast }) {
     e.preventDefault();
     data.category = data.category.name;
     data.gender = data.gender.name;
-    // console.log('data: ', data);
-
     const res = await createShoesApi(axiosJWT, userInfo?.accessToken, data);
     setVisibleCreate(false);
     Toastz(res.data, toast);
@@ -111,17 +126,16 @@ export default function ShoesSection({ toast }) {
     setData((prev) => {
       const colors = [...prev.colors];
       const current = colors[colorIndex];
-
       const newSizes = [...current.sizes, { id: Date.now() + Math.random(), size: '', stock: '' }];
-
       colors[colorIndex] = { ...current, sizes: newSizes };
-
       return { ...prev, colors };
     });
   };
 
   const removeInputSize = (colorIndex, sizeIndex) => {
     setData((prev) => {
+      if (!prev?.colors || !prev.colors[colorIndex]?.sizes) return prev;
+
       const colors = [...prev.colors];
       const current = colors[colorIndex];
 
@@ -175,8 +189,21 @@ export default function ShoesSection({ toast }) {
           }
         />
         <Column header="Created at" body={(i) => formattedDate(i?.createdAt)} />
-        <Column header="Is featured" body={(i) => i.isFeatured} />
+        {/* <Column header="Is featured" body={(i) => i.isFeatured} /> */}
         <Column header="Category" body={(i) => i.category} />
+        <Column
+          header="Is Featured"
+          body={(i) => (
+            <ToggleButtonz
+              checked={i.isFeatured}
+              onChange={(e) => {
+                // handleToggleFeatured(e.value, i?._id);
+                setIdShoesFeatured(e.value);
+                setUpdateShoes(i?._id);
+              }}
+            />
+          )}
+        />
       </DataTable>
       <Dialog
         header="Create new shoes"
@@ -291,7 +318,7 @@ export default function ShoesSection({ toast }) {
                   <div key={item.id} className="flex flex-row gap-3 slide-down">
                     <InputGroup data={data} setData={setData} index={index} i={i} />
                     <Button
-                      onClick={() => removeInputSize(item.id)}
+                      onClick={() => removeInputSize(index, i)}
                       type="button"
                       className="px-3 !bg-white !text-red-700 !border-none !text-xs !w-20 flex justify-center"
                       label="Remove"

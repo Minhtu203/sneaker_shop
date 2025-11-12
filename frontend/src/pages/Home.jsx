@@ -1,4 +1,4 @@
-import { getAllShoes } from '@/api/homeApi';
+import { getIsFeaturedShoes } from '@/api/homeApi';
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
 import CardShoes from '@/utils/CardShoes';
@@ -17,7 +17,7 @@ function Home() {
   useEffect(() => {
     const fetchShoes = async () => {
       try {
-        const data = await getAllShoes(axiosJWT, userInfo?.accessToken);
+        const data = await getIsFeaturedShoes(axiosJWT, userInfo?.accessToken);
         setAllShoes(data);
       } catch (error) {
         console.error(error);
@@ -46,13 +46,22 @@ function Home() {
           JUST DO IT
         </span>
       </div>
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 p-8 pb-8">
+      <WrapperShoes>
         {allShoes?.data?.data?.map((shoe) => (
           <CardShoes key={shoe._id} shoe={shoe} />
         ))}
-      </div>
+      </WrapperShoes>
     </div>
   );
 }
 
 export default Home;
+
+export const WrapperShoes = (props) => {
+  const { className, ...prop } = props;
+  return (
+    <div className={`w-full grid grid-cols-1 md:grid-cols-3 gap-4 p-8 pb-8 ${className}`} {...prop}>
+      {props.children}
+    </div>
+  );
+};

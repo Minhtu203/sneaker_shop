@@ -20,3 +20,14 @@ export const createShoesApi = async (axiosJWT, accessToken, data) => {
     if (error.response) return error.response;
   }
 };
+
+export const updateShoesApi = async (axiosJWT, accessToken, id, data) => {
+  try {
+    return await axiosJWT.put(`/api/shoes/updateShoes/${id}`, data, {
+      headers: { token: `Bearer ${accessToken}` },
+      withCredentials: true,
+    });
+  } catch (error) {
+    if (error.response) return error.response;
+  }
+};

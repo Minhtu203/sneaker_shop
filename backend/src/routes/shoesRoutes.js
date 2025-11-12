@@ -46,4 +46,25 @@ router.get(
   shoesController.getJordanShoes
 );
 
+// get brand Nike shoes
+router.get(
+  "/getNikeShoes",
+  middlewareController.verifyToken,
+  shoesController.getNikeShoes
+);
+
+// get brand Airmax shoes
+router.get(
+  "/getAirmaxShoes",
+  middlewareController.verifyToken,
+  shoesController.getAirmaxShoes
+);
+
+// get is featured shoes
+router.get(
+  "/getIsFeaturedShoes",
+  middlewareController.verifyToken,
+  shoesController.getIsFeaturedShoes
+);
+
 export default router;

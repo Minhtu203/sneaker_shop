@@ -26,8 +26,9 @@ const Header = ({ selected, setSelected }) => {
 
 function OnlyAdmin({ toast }) {
   useEffect(() => {
-    document.title = 'SneakerT - Admin';
+    document.title = 'Admin';
   }, []);
+
   const [selected, setSelected] = useState(null);
   return (
     <div className="w-full h-full">

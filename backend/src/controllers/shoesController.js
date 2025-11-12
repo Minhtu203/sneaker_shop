@@ -55,8 +55,9 @@ export const shoesController = {
 
       let updateQuerry = {};
 
-      if (filterOtherData.length > 0) updateQuerry = { $set: filterOtherData };
-
+      if (Object.keys(filterOtherData).length > 0) {
+        updateQuerry = { $set: filterOtherData };
+      }
       if (images && images.length > 0)
         updateQuerry.$push = { img: { $each: images } };
 
@@ -71,7 +72,11 @@ export const shoesController = {
           .status(404)
           .json({ success: false, message: "Can't found product" });
       }
-      res.status(200).json({ success: true, data: updateShoes });
+      res.status(200).json({
+        success: true,
+        data: updateShoes,
+        message: "Item updated successfully",
+      });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message || error });
     }
@@ -112,6 +117,57 @@ export const shoesController = {
         message: "Server error",
         error: error.message || error,
       });
+    }
+  },
+  // get brand Nike shoes
+  getNikeShoes: async (req, res) => {
+    try {
+      const jordanShoes = await Shoes.find({ brand: "Nike" });
+      if (jordanShoes.length === 0) {
+        return res
+          .status(404)
+          .json({ success: false, message: "No product found" });
+      }
+      res.status(200).json({ success: true, data: jordanShoes });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: error.message || error,
+      });
+    }
+  },
+  // get brand Airmax shoes
+  getAirmaxShoes: async (req, res) => {
+    try {
+      const jordanShoes = await Shoes.find({ brand: "Airmax" });
+      if (jordanShoes.length === 0) {
+        return res
+          .status(404)
+          .json({ success: false, message: "No product found" });
+      }
+      res.status(200).json({ success: true, data: jordanShoes });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        error: error.message || error,
+      });
+    }
+  },
+  // get is featured shoes
+  getIsFeaturedShoes: async (req, res) => {
+    try {
+      const featuredShoes = await Shoes.find({ isFeatured: "true" });
+      if (featuredShoes.length === 0)
+        return res
+          .status(404)
+          .json({ success: false, message: "No product found" });
+      res.status(200).json({ success: true, data: featuredShoes });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
     }
   },
 };

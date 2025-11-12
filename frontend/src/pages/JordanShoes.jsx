@@ -3,6 +3,7 @@ import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
 import CardShoes from '@/utils/CardShoes';
 import { useEffect, useState } from 'react';
+import { WrapperShoes } from './Home';
 
 function JordanShoes() {
   useEffect(() => {
@@ -27,11 +28,11 @@ function JordanShoes() {
   }, []);
 
   return (
-    <div className="w-full h-full grid grid-cols-3 gap-4 p-4">
+    <WrapperShoes>
       {jordanShoes?.data?.data?.map((shoe) => (
         <CardShoes key={shoe._id} shoe={shoe} />
       ))}
-    </div>
+    </WrapperShoes>
   );
 }
 

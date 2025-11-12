@@ -121,17 +121,29 @@ export default function ShoesDetail({ toast }) {
           </button>
         </div>
         <span className="text-[0.9rem] my-2 text-gray-500">Fits small; we recommend ordering half a size up</span>
-        <div className="grid grid-cols-3 gap-2 mb-8">
+        <div className="grid grid-cols-3 gap-2">
           {selectedColor?.sizes?.map((s) => (
-            <Button
-              onClick={() => setSize(s)}
-              key={s._id}
-              className="!text-[var(--primary-blue)] !border-[var(--primary-blue)] justify-center focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]"
-              outlined
-              label={s?.size}
-            />
+            <React.Fragment key={s._id}>
+              {s?.stock === 0 ? (
+                <Button
+                  disabled
+                  onClick={() => setSize(s)}
+                  className={`${s?.stock === 0 ? '!text-gray-400' : '!text-[var(--primary-blue)]'}  !text-[var(--primary-blue)] !border-[var(--primary-blue)] justify-center focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]`}
+                  outlined
+                  label={s?.size}
+                />
+              ) : (
+                <Button
+                  onClick={() => setSize(s)}
+                  className={`${s?.stock === 0 ? '!text-gray-400' : '!text-[var(--primary-blue)]'}  !text-[var(--primary-blue)] !border-[var(--primary-blue)] justify-center focus:!shadow-[0_0_0_0.2rem_rgba(99,102,241,0.5)]`}
+                  outlined
+                  label={s?.size}
+                />
+              )}
+            </React.Fragment>
           ))}
         </div>
+        {size && <Textz className="text-md mt-1 mb-6">Stock: {size?.stock}</Textz>}
         <div className="flex flex-col gap-3 mb-8">
           <Button
             onClick={handleAddToBag}
