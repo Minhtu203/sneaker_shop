@@ -26,7 +26,11 @@ function Login({ toast }) {
       const data = { username, password };
       const res = await loginApi(data);
       Toastz(res.data, toast);
-      if (res.success === true) {
+
+      if (res.success === true && res.data?.role === 'admin') {
+        navigate('/admin/dashboard');
+        setUserInfo(res?.data);
+      } else if (res.success === true) {
         navigate('/');
         setUserInfo(res?.data);
       }

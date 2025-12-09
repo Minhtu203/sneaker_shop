@@ -1,5 +1,5 @@
 import Home from '@/pages/Home';
-import DefaultLayout from '@/layout/DefaultLayout';
+import DefaultLayout, { DefaultAdminLayout } from '@/layout/DefaultLayout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -17,6 +17,11 @@ import UserPage from './pages/UserPage';
 import Favourites from './pages/Favourites';
 import Adidas from './pages/Adidas';
 import Header from './components/base/Header';
+import Sidebar from './components/base/SideBar';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import UserManagement from './pages/Admin/UserManagement';
+import ShoesManagement from './pages/Admin/ShoesManagement';
+import OrderManagement from './pages/Admin/OrderManagement';
 
 export const publicRoutes = [
   { path: '/login', component: Login, layout: null },
@@ -38,5 +43,11 @@ export const privateRoutes = [
   { path: '/shoes/golf', component: Golf, layout: DefaultLayout },
   { path: '/shoes/tennis', component: Tennis, layout: DefaultLayout },
   { path: '/shopping_cart', component: ShoppingCart, layout: DefaultLayout },
-  { path: '/shoes/onlyAdmin', component: OnlyAdmin, layout: DefaultLayout },
+  { path: '/shoes/onlyAdmin', component: OnlyAdmin, layout: DefaultAdminLayout },
+
+  // admin routes
+  { path: '/admin/dashboard', component: AdminDashboard, layout: DefaultAdminLayout },
+  { path: '/admin/user-management', component: UserManagement, layout: DefaultAdminLayout },
+  { path: '/admin/shoes-management', component: ShoesManagement, layout: DefaultAdminLayout },
+  { path: '/admin/order-management', component: OrderManagement, layout: DefaultAdminLayout },
 ];

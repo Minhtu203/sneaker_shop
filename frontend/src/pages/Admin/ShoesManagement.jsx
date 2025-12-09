@@ -1,3 +1,4 @@
+import React from 'react';
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createShoesApi, deleteShoesById, updateShoesApi } from '@/api/admin/shoesSectionApi';
 import { getAllShoes } from '@/api/homeApi';
@@ -17,7 +18,7 @@ import {
 import { CreateAxios } from '@/lib/axios';
 import { useUserState } from '@/store/userState';
 import { Toastz } from '@/utils/Toast';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const UpdateInput = () => {
@@ -30,7 +31,7 @@ const UpdateInput = () => {
   );
 };
 
-export default function ShoesSection({ toast }) {
+export default function ShoesManagement({ toast }) {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useUserState();
   let axiosJWT = CreateAxios(userInfo, setUserInfo);
@@ -151,7 +152,7 @@ export default function ShoesSection({ toast }) {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-4 py-8">
       <div className="grid grid-col-2 md:grid-cols-5">
         <Button
           onClick={() => setVisibleCreate(true)}
@@ -176,9 +177,12 @@ export default function ShoesSection({ toast }) {
         <Column
           header="Image"
           body={(i) => (
-            <button onClick={() => navigate(`/shoes/${i?._id}`)} className="cursor-pointer">
+            <div
+              //  onClick={() => navigate(`/shoes/${i?._id}`)}
+              className="cursor-pointer"
+            >
               <img src={i?.colors?.[0]?.img?.[0]} alt="shoes" className="w-20 h-20 object-cover rounded-2xl" />
-            </button>
+            </div>
           )}
         />
         <Column
@@ -220,7 +224,7 @@ export default function ShoesSection({ toast }) {
         <form onSubmit={handleCreateShoes} className="mt-8 flex flex-col gap-8">
           <InputText
             value={data?.name || ''}
-            onChange={(e) => setData({ ...data, name: e.target.value.trim() })}
+            onChange={(e) => setData({ ...data, name: e.target.value })}
             label="Shoes name"
           />
           <DropDown

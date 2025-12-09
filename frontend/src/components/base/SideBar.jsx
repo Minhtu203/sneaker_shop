@@ -115,7 +115,7 @@ function Sidebar({ toggleSidebar, setToggleSidebar, filter }) {
           <ButtonV3 onClick={() => navigate('/shoes/tennis')}>Tennis</ButtonV3>
         </ShowNavSidebar>
 
-        {userInfo?.role === 'admin' && (
+        {/* {userInfo?.role === 'admin' && (
           <ButtonSidebar
             onClick={() => navigate('/shoes/onlyAdmin')}
             noIcon={true}
@@ -123,7 +123,7 @@ function Sidebar({ toggleSidebar, setToggleSidebar, filter }) {
           >
             Only Admin
           </ButtonSidebar>
-        )}
+        )} */}
 
         {/* filter */}
         <div className="w-full flex flex-col gap-2 mt-8">
