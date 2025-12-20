@@ -44,13 +44,13 @@ export default function SideBarAdmin({ toggleSidebar, setToggleSidebar }) {
       </style>
 
       <div className="w-full flex flex-col gap-3">
-        <ButtonSidebar
+        {/* <ButtonSidebar
           noIcon={true}
           onClick={() => navigate('/admin/dashboard')}
           className={`${location.pathname === '/admin/dashboard' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
           Dashboard
-        </ButtonSidebar>
+        </ButtonSidebar> */}
 
         <ButtonSidebar
           noIcon={true}
@@ -68,13 +68,13 @@ export default function SideBarAdmin({ toggleSidebar, setToggleSidebar }) {
           Shoes Management
         </ButtonSidebar>
 
-        <ButtonSidebar
+        {/* <ButtonSidebar
           noIcon={true}
           onClick={() => navigate('/admin/order-management')}
           className={`${location.pathname === '/admin/order-management' ? 'text-[var(--primary-yellow)] !bg-[var(--primary-blue)]' : ''}`}
         >
           Order Management
-        </ButtonSidebar>
+        </ButtonSidebar> */}
       </div>
     </div>
   );
