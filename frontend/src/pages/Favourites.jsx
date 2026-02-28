@@ -24,6 +24,7 @@ export default function Favourites({ toast }) {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateFav]);
 
   const handleUnLike = async (id) => {
@@ -41,7 +42,7 @@ export default function Favourites({ toast }) {
         </div>
       )}
       {shoesFav?.fav && (
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {shoesFav?.fav?.map((s) => (
             <CardShoes
               heartClick={() => handleUnLike(s?.productId?._id)}

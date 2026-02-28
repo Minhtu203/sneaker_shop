@@ -18,4 +18,11 @@ router.post(
   orderController.createOrder
 );
 
+//delete order
+router.post(
+  "/deleteOrder",
+  middlewareController.verifyAdminToken,
+  orderController.deleteOrder
+);
+
 export default router;

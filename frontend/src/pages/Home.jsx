@@ -33,6 +33,7 @@ function Home() {
 
   const [toggleSidebar, setToggleSidebar] = useState(true);
 
+  // eslint-disable-next-line no-unused-vars
   const [filter, setFilter] = useState({
     isFeatured: true,
     gender: '',

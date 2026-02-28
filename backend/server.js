@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: CLIENT,
     credentials: true,
-  })
+  }),
 );
 app.use(cookieParser());
 

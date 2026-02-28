@@ -36,15 +36,6 @@ export const orderController = {
           .status(400)
           .json({ success: false, message: "Missing totalAmount" });
 
-      //   if(totalAmount === 0) {
-      //     return res.status(400).json({success:false, message: "Choose items"})
-      //   //   }
-
-      //   if (!address)
-      //     return res
-      //       .status(400)
-      //       .json({ success: false, message: "Missing address" });
-
       if (!items || items.length === 0)
         return res
           .status(400)
@@ -76,6 +67,25 @@ export const orderController = {
         .status(500)
         .json({ success: false, message: "Internal server error" });
       console.log(11111, error);
+    }
+  },
+
+  // delete order
+  deleteOrder: async (req, res) => {
+    try {
+      const orderId = req.body.orderId;
+      const deleteOrder = await Order.findByIdAndDelete(orderId);
+      if (!deleteOrder)
+        return res
+          .status(404)
+          .json({ success: false, message: "Can not find order's ID" });
+      res
+        .status(200)
+        .json({ success: true, message: "Delete order successfully" });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
     }
   },
 };

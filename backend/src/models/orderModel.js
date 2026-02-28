@@ -8,7 +8,6 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     totalAmount: { type: Number, required: true },
-    // address: { type: String, require: true },
     items: [
       {
         productId: {
